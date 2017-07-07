@@ -43,7 +43,7 @@ app.use('/', index);
 app.use('/users', users);
 
 app.get('/messeges', messeges.index);
-app.get('/messeges/:id', messeges.show);
+//app.get('/messeges/:id', messeges.show);
 app.post('/messeges', messeges.create);
 
 // catch 404 and forward to error handler
