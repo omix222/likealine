@@ -8,7 +8,7 @@ module.exports = {
     //     // TODO: findByAll 実装する
     //     res.send(messeges);
     // },
-    index: function (req, res) {
+    find: function (req, res) {
         var reqQueryGroupId = req.query.groupId;
         //テストしやすさのため、デフォルトのGroupIdはgroup1とする。（後でリファクタする?）
         var mongoQueryGroupId = reqQueryGroupId == undefined ? "group1" : reqQueryGroupId;
@@ -43,13 +43,12 @@ module.exports = {
         });
 
     },
-    // 不要で良いか？
-    // show: function (req, res) {
-    //     var messege = { "messageID": req.params.id, "messageDetail": "Hello", "fromUserId": "Takahashi", "groupID": req.query.groupId };
-    //     res.header('Content-Type', 'application/json; charset=utf-8');
-    //     // TODO: findById 実装する
-    //     res.send(messege);
-    // },
+    findById: function (req, res) {
+        var messege = { "messageID": req.params.id, "messageDetail": "Hello", "fromUserId": "Takahashi", "groupID": req.query.groupId };
+        res.header('Content-Type', 'application/json; charset=utf-8');
+        // TODO: findById 実装する
+        res.send(messege);
+    },
     create: function (req, res) {
         var messege = {};
         // TODO: insert 実装する。インクリメンタルでシーケンスっぽいのをmessegeIdカラムに対応。

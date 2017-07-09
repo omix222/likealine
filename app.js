@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var messeges = require('./routes/messeges');
+var stamps = require('./routes/stamps');
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -39,12 +40,15 @@ MongoClient.connect(url, (error, db) => {
 });
 
 // routing
+// httpmethod をrouts側で指定するパターン
 app.use('/', index);
 app.use('/users', users);
+app.use('/stamps', stamps);
+// httpmethod をapp.js側で指定するパターン
+app.get('/messeges', messeges.find);
+app.get('/messeges/:id', messeges.findById);
 
-app.get('/messeges', messeges.index);
-//app.get('/messeges/:id', messeges.show);
-app.post('/messeges', messeges.create);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

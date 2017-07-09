@@ -53,3 +53,6 @@ response sample
 ]
 
 http://localhost:3000/messeges/aa?groupId=group2
+
+スタンプ取得API (GETのみサポート)
+http://localhost:3000/stamps
