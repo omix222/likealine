@@ -20,9 +20,14 @@ db.messeges.insert({ messageId: 4, type:"stamp", messegeDetail: "stamp.png", fro
 ＃インサートしたデータの確認
 db.messeges.find()
 
-
 # collectionを削除したい場合
 db.messeges.drop();
+
+#stamp画像の仕込み
+node datainit img/smile.jpg
+
+db.stamps.drop();
+
 
 アプリ起動
 DEBUG=run:* npm start
@@ -31,6 +36,10 @@ DEBUG=run:* npm start
 http://localhost:3000/messeges
 
 各Group内のメッセージ表示用のAPIサンプル
+外部仕様
+一つのgetで取得できるメッセージは50まで
+メッセージの起点はfromMessageIdで指定。fromMessageId=100とすると、100〜50で取得。デフォルトは1000000（通常取りえない最大値）。
+messageIdの降順のorder byで返す。（最新メッセージから取得することを想定）
 request sample1
 HTTP method : GET
 http://localhost:3000/messeges?groupId=group2
