@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var messeges = require('./routes/messeges');
+var messages = require('./routes/messages');
 var stamps = require('./routes/stamps');
 
 var MongoClient = require("mongodb").MongoClient;
@@ -45,8 +45,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/stamps', stamps);
 // httpmethod をapp.js側で指定するパターン
-app.get('/messeges', messeges.find);
-app.get('/messeges/:id', messeges.findById);
+app.get('/messages', messages.find);
+app.get('/messages/:id', messages.findById);
 
 
 

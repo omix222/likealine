@@ -26,13 +26,13 @@ module.exports = {
             collection.find({
                 groupId: mongoQueryGroupId,
                 messageId: { $lt: mongoQueryFromMessageId }
-            }).sort({ 'messageId': -1 }).limit(50).toArray((error, messeges) => {
-                for (var messege of messeges) {
+            }).sort({ 'messageId': -1 }).limit(50).toArray((error, messages) => {
+                for (var message of messages) {
                     //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
-                    delete messege._id;
+                    delete message._id;
                 }
                 res.header('Content-Type', 'application/json; charset=utf-8');
-                res.send(messeges);
+                res.send(messages);
             });
 
             // MongoDB への 接続 を 切断
@@ -57,12 +57,12 @@ module.exports = {
             // TODO sortは作成日付に変える
             collection.find({
                 messageId: mongoQueryMessageId
-            }).toArray((error, messeges) => {
+            }).toArray((error, messages) => {
                 //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
-                delete messeges[0]._id;
+                delete messages[0]._id;
 
                 res.header('Content-Type', 'application/json; charset=utf-8');
-                res.send(messeges[0]);
+                res.send(messages[0]);
             });
 
             // MongoDB への 接続 を 切断
@@ -71,9 +71,9 @@ module.exports = {
         });
     },
     create: function (req, res) {
-        var messege = {};
-        // TODO: insert 実装する。インクリメンタルでシーケンスっぽいのをmessegeIdカラムに対応。
-        res.send(messege);
+        var message = {};
+        // TODO: insert 実装する。インクリメンタルでシーケンスっぽいのをmessageIdカラムに対応。
+        res.send(message);
     },
 
 };
