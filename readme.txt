@@ -130,6 +130,15 @@ response sample
 
 http://localhost:3000/messages/aa?groupId=group2
 
+post
+
+{
+                type: "test",
+                messageDetail: "first posted",
+                fromUserId: "u001",
+                groupId: "g001"
+            }
+
 スタンプ取得API (GETのみサポート)
 http://localhost:3000/stamps
 
@@ -229,3 +238,13 @@ http://localhost:3000/users/u001
   "userId": "u001",
   "userName": "Takahashi"
 }
+
+
+message post
+
+header
+Content-Type: application/json
+Accept: application/json
+
+body
+{"type" : "test","messageDetail" : "first posted","userId" : "u001","groupId" : "g001"}
