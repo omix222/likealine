@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var groups = require('./routes/groups');
+var groupmembers = require('./routes/groupmembers');
 var messages = require('./routes/messages');
 var stamps = require('./routes/stamps');
 
@@ -26,29 +28,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//mongo initialize
-// 接続文字列
-var url = "mongodb://localhost:27017/likealine";
- 
-// MongoDB へ 接続
-MongoClient.connect(url, (error, db) => {
-    // 接続メッセージを表示
-    console.log("MongoDB へ 接続中...");
- 
-    // MongoDB への 接続 を 切断
-    db.close();
-});
-
 // routing
 // httpmethod をrouts側で指定するパターン
 app.use('/', index);
-app.use('/users', users);
-app.use('/stamps', stamps);
+
 // httpmethod をapp.js側で指定するパターン
 app.get('/messages', messages.find);
 app.get('/messages/:id', messages.findById);
-
-
+app.post('/messages', messages.create);
+app.get('/users', users.find);
+app.get('/users/:id', users.findById);
+app.get('/groups', groups.find);
+app.get('/groups/:id', groups.findById);
+app.get('/stamps', stamps.find);
+app.get('/stamps', stamps.findById);
+app.get('/groupmembers', groupmembers.find);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

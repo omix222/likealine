@@ -7,28 +7,66 @@ mongo
 ＃アプリ用のDBに切り替え
 use likealine
 
+db.users.drop();
+db.users.insert({userId:"u001",userName:"Takahashi"});
+db.users.insert({userId:"u002",userName:"Kuchiki"});
+db.users.insert({userId:"u003",userName:"Ozaki"});
+db.users.insert({userId:"u004",userName:"Saito"});
+db.users.insert({userId:"u005",userName:"Iwata"});
+db.users.insert({userId:"u006",userName:"Abe"});
+db.users.insert({userId:"u007",userName:"Minami"});
+db.users.ensureIndex( { userId: 1 }, { unique: true }) ;
+
+db.groups.drop();
+db.groups.insert({groupId:"g001",groupName:"ALL"});
+db.groups.insert({groupId:"g002",groupName:"JFW"});
+db.groups.insert({groupId:"g003",groupName:"ITP"});
+db.groups.insert({groupId:"g004",groupName:"MPF"});
+db.groups.ensureIndex( { groupId: 1 }, { unique: true }) ;
+
+db.groupmembers.drop();
+db.groupmembers.insert({groupId:"g001",userId:"u001"});
+db.groupmembers.insert({groupId:"g001",userId:"u002"});
+db.groupmembers.insert({groupId:"g001",userId:"u003"});
+db.groupmembers.insert({groupId:"g001",userId:"u004"});
+db.groupmembers.insert({groupId:"g001",userId:"u005"});
+db.groupmembers.insert({groupId:"g001",userId:"u006"});
+db.groupmembers.insert({groupId:"g001",userId:"u007"});
+db.groupmembers.insert({groupId:"g002",userId:"u001"});
+db.groupmembers.insert({groupId:"g002",userId:"u002"});
+db.groupmembers.insert({groupId:"g003",userId:"u003"});
+db.groupmembers.insert({groupId:"g003",userId:"u004"});
+db.groupmembers.insert({groupId:"g004",userId:"u005"});
+db.groupmembers.insert({groupId:"g005",userId:"u006"});
+db.groupmembers.insert({groupId:"g006",userId:"u007"});
+
+
 ＃事前データのインサート１(group1)
-db.messages.insert({ messageId: 1, type:"text", messageDetail: "Hello", fromUserId: "Takahashi", groupId: "group1" ,postDate:new Date()});
+db.messages.insert({ messageId: 1, type:"text", messageDetail: "Hello", fromUserId: "u001", groupId: "g001" ,postDate:new Date()});
 ＃事前データのインサート２(group1)
-db.messages.insert({ messageId: 2, type:"text", messageDetail: "Hello again!", fromUserId: "Kuchiki", groupId: "group1" ,postDate:new Date()});
+db.messages.insert({ messageId: 2, type:"text", messageDetail: "Hello again!", fromUserId: "u002", groupId: "g001" ,postDate:new Date()});
 ＃事前データのインサート3(group2)
-db.messages.insert({ messageId: 3, type:"text", messageDetail: "Another Group!", fromUserId: "Ozaki", groupId: "group2" ,postDate:new Date()});
+db.messages.insert({ messageId: 3, type:"text", messageDetail: "Another Group!", fromUserId: "u003", groupId: "g002" ,postDate:new Date()});
 ＃事前データのインサート4(group2,スタンプ)
-db.messages.insert({ messageId: 4, type:"stamp", messageDetail: "stamp.png", fromUserId: "Ozaki", groupId: "group2" ,postDate:new Date()});
+db.messages.insert({ messageId: 4, type:"stamp", messageDetail: "stamp.png", fromUserId: "u004", groupId: "g002" ,postDate:new Date()});
 
 #フィールド "messageId" をユニークにする
-db.collection.ensureIndex( { messageId: 1 }, { unique: true }) ;
+db.messages.ensureIndex( { messageId: 1 }, { unique: true }) ;
 
 ＃インサートしたデータの確認
 db.messages.find()
 
-# collectionを削除したい場合
+# 削除
 db.messages.drop();
 
 #stamp画像の仕込み
 node datainit img/smile.jpg
 
+#フィールド "filename" をユニークにする
+db.stamps.ensureIndex( { filename: 1 }, { unique: true }) ;
+
 db.stamps.drop();
+
 
 
 アプリ起動
@@ -90,9 +128,104 @@ response sample
   }
 ]
 
-
-
 http://localhost:3000/messages/aa?groupId=group2
 
 スタンプ取得API (GETのみサポート)
 http://localhost:3000/stamps
+
+#特定Groupに所属しているユーザー一覧の取得（クエリストリングなしの場合は全Groupの所属User一覧を取得）
+http://localhost:3000/groupmembers?groupId=g001
+[
+  {
+    "groupId": "g001",
+    "userId": "u001"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u002"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u003"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u004"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u005"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u006"
+  },
+  {
+    "groupId": "g001",
+    "userId": "u007"
+  }
+]
+
+
+http://localhost:3000/groups
+
+[
+  {
+    "groupId": "g001",
+    "groupName": "ALL"
+  },
+  {
+    "groupId": "g002",
+    "groupName": "JFW"
+  },
+  {
+    "groupId": "g003",
+    "groupName": "ITP"
+  },
+  {
+    "groupId": "g004",
+    "groupName": "MPF"
+  }
+]
+http://localhost:3000/groups/g001
+{
+  "groupId": "g001",
+  "groupName": "ALL"
+}
+
+http://localhost:3000/users
+[
+  {
+    "userId": "u001",
+    "userName": "Takahashi"
+  },
+  {
+    "userId": "u002",
+    "userName": "Kuchiki"
+  },
+  {
+    "userId": "u003",
+    "userName": "Ozaki"
+  },
+  {
+    "userId": "u004",
+    "userName": "Saito"
+  },
+  {
+    "userId": "u005",
+    "userName": "Iwata"
+  },
+  {
+    "userId": "u006",
+    "userName": "Abe"
+  },
+  {
+    "userId": "u007",
+    "userName": "Minami"
+  }
+]
+http://localhost:3000/users/u001
+{
+  "userId": "u001",
+  "userName": "Takahashi"
+}
