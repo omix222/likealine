@@ -20,7 +20,7 @@ module.exports = {
             console.log("MongoDB へ 接続中...");
             var collection;
             // コレクションの取得
-            collection = db.collection("messeges");
+            collection = db.collection("messages");
             // コレクションに含まれるドキュメントをすべて取得
             // TODO sortは作成日付に変える
             collection.find({
@@ -52,7 +52,7 @@ module.exports = {
             console.log("MongoDB へ 接続中...");
             var collection;
             // コレクションの取得
-            collection = db.collection("messeges");
+            collection = db.collection("messages");
             // コレクションに含まれるドキュメントをすべて取得
             // TODO sortは作成日付に変える
             collection.find({
