@@ -81,13 +81,13 @@ module.exports = {
             var nextMessageId;
             var collection;
             // コレクションの取得
-            this.collection = db.collection("messages");
+            collection = db.collection("messages");
             // コレクションに含まれるドキュメントをすべて取得
             var totalMessageCount;
-            this.collection.find().sort({ 'messageId': -1 }).limit(1).toArray((error, messages) => {
+            collection.find().sort({ 'messageId': -1 }).limit(1).toArray((error, messages) => {
                 totalMessageCount = messages[0].messageId;
                 nextMessageId = Number(totalMessageCount) + 1;
-                this.collection.insertOne({
+                collection.insertOne({
                     messageId: nextMessageId,
                     type: req.body.type,
                     messageDetail: req.body.messageDetail,
