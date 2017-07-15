@@ -64,15 +64,12 @@ module.exports = {
                 res.header('Content-Type', 'application/json; charset=utf-8');
                 res.send(messages[0]);
             });
-
             // MongoDB への 接続 を 切断
             db.close();
             console.log("MongoDB から切断しました。");
         });
     },
     create: function (req, res) {
-        var message = {};
-        // TODO: insert 実装する。インクリメンタルでシーケンスっぽいのをmessageIdカラムに対応。
         //mongo initialize
         // 接続文字列
         var url = "mongodb://localhost:27017/likealine";
@@ -81,32 +78,31 @@ module.exports = {
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var totalMessageCount;
+            var nextMessageId;
             var collection;
             // コレクションの取得
-            collection = db.collection("messages");
+            this.collection = db.collection("messages");
             // コレクションに含まれるドキュメントをすべて取得
             var totalMessageCount;
-            collection.find().sort({ 'messageId': -1 }).limit(1).toArray((error, messages) => {
+            this.collection.find().sort({ 'messageId': -1 }).limit(1).toArray((error, messages) => {
                 totalMessageCount = messages[0].messageId;
-                console.log("totalMessageCount : " + totalMessageCount);
-                var nextMessageId = Number(totalMessageCount) + 1;
-                console.log("nextMessageId : " + nextMessageId);
-                collection = db.collection("messages");
-                collection.insertOne({
-                    //_id: 10,
+                nextMessageId = Number(totalMessageCount) + 1;
+                this.collection.insertOne({
                     messageId: nextMessageId,
                     type: req.body.type,
                     messageDetail: req.body.messageDetail,
                     fromUserId: req.body.userId,
                     groupId: req.body.groupId,
                     postDate: new Date()
+                }, function (err, response) {
+                    if (err) throw err;
+                    console.log("1 record inserted");
+                    db.close();
+                    res.header('Content-Type', 'application/json; charset=utf-8');
+                    res.send('201 created!!');
                 });
             });
-            // MongoDB への 接続 を 切断
-            db.close();
-            console.log("MongoDB から切断しました。");
-            res.header('Content-Type', 'application/json; charset=utf-8');
-            res.send('201 created!');
+
         });
 
     },
