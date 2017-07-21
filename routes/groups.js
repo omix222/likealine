@@ -7,6 +7,7 @@ module.exports = {
         var url = "mongodb://localhost:27017/likealine";
         // MongoDB へ 接続
         MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var collection;
@@ -15,6 +16,7 @@ module.exports = {
             // コレクションに含まれるドキュメントをすべて取得
             // TODO sortは作成日付に変える
             collection.find().toArray((error, groups) => {
+                if (error) throw error;
                 for (var group of groups) {
                     //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
                     delete group._id;
@@ -35,6 +37,7 @@ module.exports = {
         var url = "mongodb://localhost:27017/likealine";
         // MongoDB へ 接続
         MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var collection;
@@ -44,6 +47,7 @@ module.exports = {
             collection.find({
                 groupId: mongoQueryGroupId
             }).toArray((error, groups) => {
+                if (error) throw error;
                 //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
                 delete groups[0]._id;
                 res.header('Content-Type', 'application/json; charset=utf-8');

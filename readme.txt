@@ -240,7 +240,7 @@ http://localhost:3000/users/u001
 }
 
 
-message post
+message post example
 
 header
 Content-Type: application/json

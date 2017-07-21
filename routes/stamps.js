@@ -9,6 +9,7 @@ module.exports = {
     var url = "mongodb://localhost:27017/likealine";
     // MongoDB へ 接続
     MongoClient.connect(url, (error, db) => {
+      if (error) throw error;
       // 接続メッセージを表示
       console.log("MongoDB へ 接続中...");
       var collection;
@@ -16,6 +17,7 @@ module.exports = {
       collection = db.collection("stamps");
       // コレクションに含まれるドキュメントをすべて取得
       collection.find().toArray((error, stamps) => {
+        if (error) throw error;
         for (var stamp of stamps) {
           //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
           delete stamp._id;
@@ -35,6 +37,7 @@ module.exports = {
     var url = "mongodb://localhost:27017/likealine";
     // MongoDB へ 接続
     MongoClient.connect(url, (error, db) => {
+      if (error) throw error;
       // 接続メッセージを表示
       console.log("MongoDB へ 接続中...");
       var collection;
@@ -44,6 +47,7 @@ module.exports = {
       collection.find({
         stampId: mongoStampId
       }).toArray((error, stamps) => {
+        if (error) throw error;
         //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
         delete stamps[0]._id;
         res.header('Content-Type', 'application/json; charset=utf-8');

@@ -29,7 +29,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routing
-// httpmethod をrouts側で指定するパターン
 app.use('/', index);
 
 // httpmethod をapp.js側で指定するパターン

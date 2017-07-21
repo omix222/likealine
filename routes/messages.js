@@ -16,6 +16,7 @@ module.exports = {
         var url = "mongodb://localhost:27017/likealine";
         // MongoDB へ 接続
         MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var collection;
@@ -27,6 +28,7 @@ module.exports = {
                 groupId: mongoQueryGroupId,
                 messageId: { $lt: mongoQueryFromMessageId }
             }).sort({ 'messageId': -1 }).limit(50).toArray((error, messages) => {
+                if (error) throw error;
                 for (var message of messages) {
                     //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
                     delete message._id;
@@ -48,6 +50,7 @@ module.exports = {
         var url = "mongodb://localhost:27017/likealine";
         // MongoDB へ 接続
         MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var collection;
@@ -58,9 +61,9 @@ module.exports = {
             collection.find({
                 messageId: mongoQueryMessageId
             }).toArray((error, messages) => {
+                if (error) throw error;
                 //MongoDBが勝手に付与する _id のプロパティを削除する（API外部仕様に合わせる対応）
                 delete messages[0]._id;
-
                 res.header('Content-Type', 'application/json; charset=utf-8');
                 res.send(messages[0]);
             });
@@ -75,6 +78,7 @@ module.exports = {
         var url = "mongodb://localhost:27017/likealine";
         // MongoDB へ 接続
         MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
             // 接続メッセージを表示
             console.log("MongoDB へ 接続中...");
             var totalMessageCount;
@@ -85,6 +89,7 @@ module.exports = {
             // コレクションに含まれるドキュメントをすべて取得
             var totalMessageCount;
             collection.find().sort({ 'messageId': -1 }).limit(1).toArray((error, messages) => {
+                if (error) throw error;
                 totalMessageCount = messages[0].messageId;
                 nextMessageId = Number(totalMessageCount) + 1;
                 collection.insertOne({
@@ -98,6 +103,7 @@ module.exports = {
                     if (err) throw err;
                     console.log("1 record inserted");
                     db.close();
+                    console.log("MongoDB から切断しました。");
                     res.header('Content-Type', 'application/json; charset=utf-8');
                     res.send('201 created!!');
                 });
