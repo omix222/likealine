@@ -1,0 +1,42 @@
+swagger: "2.0"
+info:
+  description: "This is Like a Line aplication API."
+  version: "1.0.0"
+  title: "Like a Line"
+  termsOfService: "http://xxx"
+  contact:
+    email: "hogehoge@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/likealine"
+schemes:
+- "http"
+paths:
+  /groups:
+    get:
+      tags:
+      - "groups"
+      summary: "Finds groups"
+      description: "find Group"
+      operationId: "findGroups"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        500:
+          description: "Internal Server Error"
+definitions:
+  Group:
+    type: "object"
+    properties:
+      groupId:
+        type: "string"
+      groupName:
+        type: "string"

@@ -11,6 +11,7 @@ var groups = require('./routes/groups');
 var groupmembers = require('./routes/groupmembers');
 var messages = require('./routes/messages');
 var stamps = require('./routes/stamps');
+var usericons = require('./routes/usericons');
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -42,6 +43,8 @@ app.get('/groups/:id', groups.findById);
 app.get('/stamps', stamps.find);
 app.get('/stamps', stamps.findById);
 app.get('/groupmembers', groupmembers.find);
+app.get('/usericons', usericons.find);
+app.get('/usericons', usericons.findById);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
