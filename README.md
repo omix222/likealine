@@ -1,6 +1,6 @@
 # likealine
 事前準備
-## mongpoDBの起動とデータ準備
+## mongpoDBの起動とデータ準備
  -  mongo 起動
 
 mongo
@@ -52,9 +52,13 @@ db.messages.insert({ messageId: 1, type:"text", messageDetail: "Hello", fromUser
 - 事前データのインサート２(group1)
 
 db.messages.insert({ messageId: 2, type:"text", messageDetail: "Hello again!", fromUserId: "u002", groupId: "g001" ,postDate:new Date()});
-＃事前データのインサート3(group2)
+
+- 事前データのインサート3(group2)
+
 db.messages.insert({ messageId: 3, type:"text", messageDetail: "Another Group!", fromUserId: "u003", groupId: "g002" ,postDate:new Date()});
-＃事前データのインサート4(group2,スタンプ)
+
+- 事前データのインサート4(group2,スタンプ)
+
 db.messages.insert({ messageId: 4, type:"stamp", messageDetail: "stamp.png", fromUserId: "u004", groupId: "g002" ,postDate:new Date()});
 
  - フィールド "messageId" をユニークにする
@@ -192,7 +196,7 @@ http://localhost:3000/groupmembers?groupId=g001
   }
 ]
 
-- グループ情報取得API
+- グループ情報取得API
 
 http://localhost:3000/groups
 
@@ -220,7 +224,7 @@ http://localhost:3000/groups/g001
   "groupName": "ALL"
 }
 
-- ユーザー情報取得API
+- ユーザー情報取得API
 
 http://localhost:3000/users
 [
